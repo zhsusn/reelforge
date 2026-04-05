@@ -28,18 +28,18 @@ class ConnectionPool:
     _lock: threading.Lock = threading.Lock()
     
     def __new__(
-        cls, 
-        db_path: Path, 
+        cls,
+        db_path: Path,
         max_connections: int = 5,
         **config: Any
     ) -> ConnectionPool:
         """单例构造器
-        
+
         Args:
             db_path: 数据库文件路径
             max_connections: 最大连接数（1-10）
             **config: 额外配置（超时、WAL 模式等）
-            
+
         Raises:
             ConnectionError: 尝试用不同 db_path 创建第二个实例
         """
@@ -48,7 +48,13 @@ class ConnectionPool:
                 cls._instance = super().__new__(cls)
                 cls._instance._initialize(db_path, max_connections, config)
                 return cls._instance
-            
+
+            # 如果实例已关闭，允许重新初始化（支持测试场景）
+            if cls._instance._closed:
+                cls._instance._initialize(db_path, max_connections, config)
+                cls._instance._closed = False
+                return cls._instance
+
             if Path(db_path) != cls._instance._db_path:
                 raise ConnectionError(
                     f"Cannot create pool for different db_path. "

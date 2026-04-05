@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx claude-code-templates@latest:*)",
+      "Bash(printf \"4\\\\n2\\\\n\")",
+      "Read(//tmp/**)",
+      "Bash(ls:*)",
+      "Bash(python -m mypy --version)",
+      "Bash(python -m pytest --version)",
+      "Bash(python -m mypy src/reelforge/modules/database/ --ignore-missing-imports)",
+      "Bash(python:*)",
+      "Bash(mypy src/reelforge/modules/database/ --strict)",
+      "Bash(mv:*)",
+      "Bash(pip list:*)",
+      "Bash(mypy:*)",
+      "Bash(rm -rf \"{uploads,temp,output,logs,queue}\")",
+      "Bash(mkdir uploads:*)",
+      "Bash(xargs grep:*)",
+      "Bash(pip install:*)",
+      "Bash(find /d/srccode/reelforge -type f -name \"*.py\" -exec grep -l \"ErrorCode\\\\|error_code\\\\|E-\" {} \\\\;)",
+      "Bash(find /d/srccode/reelforge -type f -name \"*.py\" -exec grep -l \"logging\\\\|logger\" {} \\\\;)",
+      "Bash(find /d/srccode/reelforge -type f -name \"*.py\" -exec grep -l \"tempfile\\\\|TemporaryDirectory\\\\|temp_dir\" {} \\\\;)",
+      "Bash(find /d/srccode/reelforge -name \"*.py\" -exec grep -l \"coverage\\\\|pytest\\\\|test\" {} \\\\;)",
+      "Bash(where ffmpeg:*)",
+      "Bash(pytest:*)",
+      "Bash(cp:*)",
+      "Bash(find D:\\\\srccode\\\\reelforge:*)",
+      "Bash(grep -E \"\\\\.py$|\\\\.toml$|\\\\.txt$\")",
+      "Bash(grep -E \"\\\\.bat$|\\\\.sh$\")",
+      "Bash(find \"D:\\\\srccode\\\\reelforge\" -path \"*/__pycache__\" -prune -o -type f -name \"*.py\" -exec grep -l \"project\\\\|character\\\\|shot\\\\|task\" {} \\\\;)",
+      "Bash(find D:\\\\srccode\\\\reelforge\\\\docs:*)",
+      "Bash(rm:*)",
+      "Bash(find .:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}

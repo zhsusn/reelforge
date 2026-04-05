@@ -40,6 +40,87 @@ from .character import (
     CharacterManager,
 )
 
+# Task model exports
+from .task import (
+    Task,
+    TaskCreate,
+    TaskUpdate,
+    TaskWithStats,
+    TaskStatus,
+    TaskType,
+    TaskError,
+    TaskNotFoundError,
+    TaskAlreadyExistsError,
+    InvalidTaskStatusError,
+    InvalidPriorityError,
+    ProgressError,
+    TaskManager,
+)
+
+# Script Line model exports
+from .script_lines import (
+    ScriptLine,
+    ScriptLineCreate,
+    ScriptLineUpdate,
+    ScriptLineWithStats,
+    ScriptLineError,
+    ScriptLineNotFoundError,
+    ScriptLineAlreadyExistsError,
+    InvalidSequenceError,
+    CharacterMismatchError,
+    ScriptLineManager,
+)
+
+# Shot model exports
+from .shot import (
+    Shot,
+    ShotCreate,
+    ShotUpdate,
+    ShotWithStats,
+    ShotStatus,
+    ShotError,
+    ShotNotFoundError,
+    ShotAlreadyExistsError,
+    InvalidShotStatusError,
+    ShotGenerationError,
+    SimilarityScoreError,
+    ResourceNotFoundError,
+    ShotManager,
+)
+
+# System Config model exports
+from .system_config import (
+    SystemConfig,
+    SystemConfigCreate,
+    SystemConfigUpdate,
+    TypedConfig,
+    ConfigType,
+    SystemConfigError,
+    ConfigNotFoundError,
+    ConfigAlreadyExistsError,
+    ConfigValidationError,
+    ConfigValueError,
+    SystemConfigManager,
+)
+
+# API Quotas model exports
+from .api_quotas import (
+    ApiQuota,
+    ApiQuotaCreate,
+    ApiQuotaUpdate,
+    QuotaUsage,
+    QuotaReservation,
+    ServiceName,
+    ApiQuotaError,
+    QuotaNotFoundError,
+    QuotaExhaustedError,
+    InvalidQuotaAmountError,
+    ServiceDisabledError,
+    QuotaResetError,
+    ReservationNotFoundError,
+    ApiQuotaManager,
+)
+
 __all__ = [
     # Database infrastructure
     "Database",
@@ -73,4 +154,70 @@ __all__ = [
     "InvalidFirstFrameError",
     "ProjectMismatchError",
     "CharacterManager",
+    # Task model
+    "Task",
+    "TaskCreate",
+    "TaskUpdate",
+    "TaskWithStats",
+    "TaskStatus",
+    "TaskType",
+    "TaskError",
+    "TaskNotFoundError",
+    "TaskAlreadyExistsError",
+    "InvalidTaskStatusError",
+    "InvalidPriorityError",
+    "ProgressError",
+    "TaskManager",
+    # Script Line model
+    "ScriptLine",
+    "ScriptLineCreate",
+    "ScriptLineUpdate",
+    "ScriptLineWithStats",
+    "ScriptLineError",
+    "ScriptLineNotFoundError",
+    "ScriptLineAlreadyExistsError",
+    "InvalidSequenceError",
+    "CharacterMismatchError",
+    "ScriptLineManager",
+    # Shot model
+    "Shot",
+    "ShotCreate",
+    "ShotUpdate",
+    "ShotWithStats",
+    "ShotStatus",
+    "ShotError",
+    "ShotNotFoundError",
+    "ShotAlreadyExistsError",
+    "InvalidShotStatusError",
+    "ShotGenerationError",
+    "SimilarityScoreError",
+    "ResourceNotFoundError",
+    "ShotManager",
+    # System Config model
+    "SystemConfig",
+    "SystemConfigCreate",
+    "SystemConfigUpdate",
+    "TypedConfig",
+    "ConfigType",
+    "SystemConfigError",
+    "ConfigNotFoundError",
+    "ConfigAlreadyExistsError",
+    "ConfigValidationError",
+    "ConfigValueError",
+    "SystemConfigManager",
+    # API Quotas model
+    "ApiQuota",
+    "ApiQuotaCreate",
+    "ApiQuotaUpdate",
+    "QuotaUsage",
+    "QuotaReservation",
+    "ServiceName",
+    "ApiQuotaError",
+    "QuotaNotFoundError",
+    "QuotaExhaustedError",
+    "InvalidQuotaAmountError",
+    "ServiceDisabledError",
+    "QuotaResetError",
+    "ReservationNotFoundError",
+    "ApiQuotaManager",
 ]
