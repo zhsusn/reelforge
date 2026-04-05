@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<title>成片库 - 织影 ShadowWeave</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+<style>
+        body { background-color: #0a0a0f; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(26, 26, 35, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .sidebar-item.active { background: rgba(0, 212, 255, 0.1); border-left: 4px solid #00d4ff; color: #00d4ff; }
+        .text-gradient { background: linear-gradient(90deg, #00d4ff, #b829dd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .asset-card:hover .overlay { opacity: 1; }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<aside class="w-64 glass border-r border-white/5 flex flex-col fixed h-full z-50">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 bg-gradient-to-br from-[#00d4ff] to-[#b829dd] rounded-lg flex items-center justify-center font-bold">织</div>
+<h1 class="text-xl font-bold tracking-wider text-gradient">织影 Weave</h1>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-2">
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-slate-400" href="index.html"><span class="iconify" data-icon="solar:widget-5-bold-duotone"></span> 核心控制台</a>
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-slate-400" href="scripts.html"><span class="iconify" data-icon="solar:document-text-bold-duotone"></span> 剧本工坊</a>
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-slate-400" href="characters.html"><span class="iconify" data-icon="solar:users-group-rounded-bold"></span> 角色工厂</a>
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-slate-400" href="editor.html"><span class="iconify" data-icon="solar:clapperboard-edit-bold"></span> 分镜工作室</a>
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-slate-400" href="render.html"><span class="iconify" data-icon="solar:cloud-upload-bold"></span> 渲染中心</a>
+<a class="sidebar-item active flex items-center gap-3 px-4 py-3 rounded-xl" href="library.html"><span class="iconify" data-icon="solar:gallery-wide-bold"></span> 成片库</a>
+</nav>
+</aside>
+<main class="flex-1 ml-64 p-8">
+<div class="flex justify-between items-end mb-10">
+<div>
+<h2 class="text-3xl font-bold mb-2">数字化视频资产管理</h2>
+<div class="flex items-center gap-4 text-xs text-slate-500">
+<span class="flex items-center gap-1"><span class="iconify border-white/10" data-icon="solar:folder-favorite-bold"></span> 共 156 个文件</span>
+<span class="flex items-center gap-1 text-white"><span class="iconify" data-icon="solar:database-bold"></span> 已用 42.5 GB / 100 GB</span>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="glass flex items-center px-4 py-2 rounded-xl border-white/10 text-white">
+<span class="iconify text-slate-500 mr-2" data-icon="solar:magnifer-linear"></span>
+<input class="bg-transparent text-sm outline-none" placeholder="搜索文件名/标签..." type="text"/>
+</div>
+<button class="px-6 py-3 glass rounded-xl font-bold flex items-center gap-2 text-white">
+<span class="iconify" data-icon="solar:sort-from-bottom-to-top-bold"></span> 排序
+                </button>
+</div>
+</div>
+<!-- 瀑布流/网格 -->
+<div class="grid grid-cols-4 gap-6 text-white text-white">
+<!-- 资产卡片 -->
+<div class="asset-card glass rounded-[2rem] overflow-hidden group cursor-pointer relative">
+<div class="aspect-video bg-slate-800 overflow-hidden relative">
+<img alt="Asset" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-03-01/bbf7d53e938848679fbe5999d06432a3.jpg"/>
+<div class="overlay absolute inset-0 bg-black/60 opacity-0 transition-opacity flex items-center justify-center gap-4">
+<span class="iconify text-3xl hover:text-[#00d4ff]" data-icon="solar:play-circle-bold"></span>
+<span class="iconify text-3xl hover:text-[#00d4ff]" data-icon="solar:file-download-bold"></span>
+</div>
+<span class="absolute bottom-2 right-2 px-2 py-0.5 glass text-[10px] rounded">03:15</span>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-2">
+<h5 class="text-sm font-bold truncate pr-4">赛博朋克大运河_终版.mp4</h5>
+<span class="iconify text-slate-600" data-icon="solar:star-outline"></span>
+</div>
+<div class="flex flex-wrap gap-1 mb-4">
+<span class="text-[9px] bg-blue-500/10 text-[#00d4ff] px-2 py-0.5 rounded">4K</span>
+<span class="text-[9px] bg-purple-500/10 text-[#b829dd] px-2 py-0.5 rounded">Sci-Fi</span>
+</div>
+<p class="text-[10px] text-slate-500">生成日期: 2026-03-01</p>
+</div>
+</div>
+<!-- 资产卡片 2-8 示意重复 -->
+<div class="asset-card glass rounded-[2rem] overflow-hidden group cursor-pointer relative">
+<div class="aspect-video bg-slate-800 overflow-hidden relative">
+<img alt="Asset" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-03-01/bbf7d53e938848679fbe5999d06432a3.jpg"/>
+<div class="overlay absolute inset-0 bg-black/60 opacity-0 transition-opacity flex items-center justify-center gap-4">
+<span class="iconify text-3xl hover:text-[#00d4ff]" data-icon="solar:play-circle-bold"></span>
+</div>
+<span class="absolute bottom-2 right-2 px-2 py-0.5 glass text-[10px] rounded">00:45</span>
+</div>
+<div class="p-5">
+<h5 class="text-sm font-bold truncate pr-4 mb-2">深夜食堂_短版.mp4</h5>
+<div class="flex flex-wrap gap-1 mb-4">
+<span class="text-[9px] bg-emerald-500/10 text-[#00ffab] px-2 py-0.5 rounded">1080P</span>
+<span class="text-[9px] bg-slate-500/10 text-slate-400 px-2 py-0.5 rounded">Food</span>
+</div>
+<p class="text-[10px] text-slate-500">生成日期: 2026-02-28</p>
+</div>
+</div>
+<!-- 重复 -->
+<div class="asset-card glass rounded-[2rem] overflow-hidden opacity-50 hover:opacity-100 transition-all text-white">
+<div class="aspect-video bg-slate-800 overflow-hidden relative"><img alt="Asset" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-03-01/bbf7d53e938848679fbe5999d06432a3.jpg"/></div>
+<div class="p-5"><h5 class="text-sm font-bold truncate mb-2">未命名项目_01.mp4</h5><p class="text-[10px] text-slate-500">2026-02-25</p></div>
+</div>
+<div class="asset-card glass rounded-[2rem] overflow-hidden opacity-50 hover:opacity-100 transition-all text-white">
+<div class="aspect-video bg-slate-800 overflow-hidden relative border-white/10"><img alt="Asset" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-03-01/bbf7d53e938848679fbe5999d06432a3.jpg"/></div>
+<div class="p-5"><h5 class="text-sm font-bold truncate mb-2">品牌宣传测试.mp4</h5><p class="text-[10px] text-slate-500">2026-02-20</p></div>
+</div>
+<div class="asset-card glass rounded-[2rem] overflow-hidden opacity-50 hover:opacity-100 transition-all text-white">
+<div class="aspect-video bg-slate-800 overflow-hidden relative border-white/10"><img alt="Asset" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-03-01/bbf7d53e938848679fbe5999d06432a3.jpg"/></div>
+<div class="p-5"><h5 class="text-sm font-bold truncate mb-2">婚礼祝福_AI高清.mp4</h5><p class="text-[10px] text-slate-500">2026-02-15</p></div>
+</div>
+<div class="asset-card glass rounded-[2rem] overflow-hidden opacity-50 hover:opacity-100 transition-all text-white">
+<div class="aspect-video bg-slate-800 overflow-hidden relative border-white/10"><img alt="Asset" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-03-01/bbf7d53e938848679fbe5999d06432a3.jpg"/></div>
+<div class="p-5"><h5 class="text-sm font-bold truncate mb-2">城市延时摄影副本.mp4</h5><p class="text-[10px] text-slate-500">2026-02-10</p></div>
+</div>
+<div class="asset-card glass rounded-[2rem] overflow-hidden opacity-50 hover:opacity-100 transition-all text-white text-white">
+<div class="aspect-video bg-slate-800 overflow-hidden relative border-white/10"><img alt="Asset" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-03-01/bbf7d53e938848679fbe5999d06432a3.jpg"/></div>
+<div class="p-5"><h5 class="text-sm font-bold truncate mb-2">产品发布会倒计时.mp4</h5><p class="text-[10px] text-slate-500">2026-02-05</p></div>
+</div>
+<div class="asset-card glass rounded-[2rem] overflow-hidden opacity-50 hover:opacity-100 transition-all text-white">
+<div class="aspect-video bg-slate-800 overflow-hidden relative border-white/10 text-white"><img alt="Asset" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-03-01/bbf7d53e938848679fbe5999d06432a3.jpg"/></div>
+<div class="p-5"><h5 class="text-sm font-bold truncate mb-2">元宇宙入口.mp4</h5><p class="text-[10px] text-slate-500">2026-02-01</p></div>
+</div>
+</div>
+</main>
+</body>
+</html>

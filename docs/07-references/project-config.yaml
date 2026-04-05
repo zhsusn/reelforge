@@ -1,0 +1,350 @@
+# =============================================================================
+# 影工厂 (ReelForge) - AI短剧生成平台 项目配置
+# 版本：v1.1 | 修正日期：2026-03-20
+# 说明：已对齐《通用行动列表》文档命名规范（7级目录结构）
+# 变更：修正 document_protocols 路径，更新文件状态为当前实际进度
+# =============================================================================
+
+project_context:
+  name: "影工厂"
+  codename: "ReelForge"  
+  legacy_name: "ShadowWeave"
+  paradigm: "super-individual"
+  version: "1.0.0"
+  
+  value_proposition: 
+    - "首帧角色锁定技术（Character Lock）"
+    - "Excel批量驱动剧本工厂"  
+    - "零云服务器成本本地渲染"
+    - "DeepSeek+通义万相+Edge TTS全免费API栈"
+
+  constraints:
+    - "zero-cloud-cost"
+    - "offline-first"
+    - "single-developer"
+    - "sqlite-only"
+    - "local-first"
+    - "batch-production"
+    - "first-frame-lock"
+
+  tech_stack:
+    frontend:
+      framework: "Streamlit"
+      version: "1.29.0"
+      paradigm: "multi-page"
+      limitations_acknowledged:
+        - "无真拖拽：使用st.sortable或上下箭头"
+        - "无真并发：Threading+SQLite轮询模拟"
+        - "无WebSocket：使用st.rerun()轮询"
+    
+    backend:
+      language: "Python"
+      version: "3.9+"
+      package_manager: "pip"
+      virtual_env: "venv"
+    
+    database:
+      engine: "SQLite"
+      driver: "sqlite3"
+      orm: "raw_sql"
+      queue: "persist-queue==0.8.1"
+      schema_version: 1
+    
+    media_processing:
+      video: "moviepy==1.0.3"
+      ffmpeg: "required_system_dependency"
+      audio_analysis: "librosa==0.10.1"
+      audio_processing: "pydub==0.25.1"
+      tts: "edge-tts==6.1.9"
+      image: "Pillow==10.1.0"
+      background_removal: "rembg==2.0.50"
+      face_recognition: "face-recognition==1.3.0"
+    
+    ai_apis:
+      nlp: "deepseek-v3"
+      vision: "wanx2.1-t2i-plus"
+      tts: "edge-tts"
+    
+    deployment:
+      windows: "PyInstaller + NSIS安装程序"
+      mac: "PyInstaller --windowed"
+      startup: "start.bat / start.sh"
+
+  paths:
+    workspace: "./workspace"
+    assets: "./assets"
+    temp: "./workspace/temp"
+    output: "./workspace/output"
+    logs: "./workspace/logs"
+    database: "./data/reelforge.db"
+    structure:
+      app: "app/"
+      core: "core/"
+      services: "services/"
+      models: "models/"
+      utils: "utils/"
+      tests: "tests/"
+
+  api_config:
+    deepseek:
+      endpoint: "https://api.deepseek.com/v1"
+      model: "deepseek-v3"
+      max_tokens: 4096
+      temperature: 0.7
+      api_key: "${DEEPSEEK_API_KEY}"
+    
+    tongyi_wanxiang:
+      endpoint: "https://dashscope.aliyuncs.com/api/v1"
+      model: "wanx2.1-t2i-plus"
+      image_size: "1080*1920"
+      api_key: "${TONGYI_API_KEY}"
+    
+    edge_tts:
+      voice_mapping:
+        narrator: "zh-CN-XiaoxiaoNeural"
+        male: "zh-CN-YunxiNeural"
+        female: "zh-CN-XiaoyiNeural"
+        elder: "zh-CN-YunjianNeural"
+
+  agent_rules:
+    quality_gates:
+      max_function_lines: 50
+      max_class_lines: 300
+      max_file_lines: 800
+      complexity_limit: 10
+      type_hint_coverage: 100
+    
+    coding_style:
+      import_order: ["__future__", "stdlib", "third-party", "local"]
+      docstring_format: "Google"
+      string_quotes: "double"
+      
+    mandatory_patterns:
+      - "所有外部API调用必须带@retry装饰器（tenacity）"
+      - "所有路径操作必须使用pathlib.Path"
+      - "所有数据库操作必须使用with上下文"
+      - "所有耗时操作必须更新progress状态到SQLite"
+      - "所有异常必须捕获并记录到errors.log"
+      - "首帧锁定代码必须包含# TODO: 降级策略标记"
+    
+    forbidden_patterns:
+      - "禁止全局变量（除CONFIG单例外）"
+      - "禁止*通配符导入"
+      - "禁止在Streamlit主线程执行>2s的操作"
+      - "禁止print，必须用logging"
+      - "禁止os.path，必须用pathlib"
+      - "禁止硬编码API密钥（必须用环境变量/.env）"
+
+  business_rules:
+    character_consistency:
+      min_similarity_score: 90
+      first_frame_size: [512, 512]
+      supported_formats: ["PNG", "JPG", "JPEG"]
+      auto_crop: true
+    
+    batch_production:
+      max_queue_size: 3
+      excel_required_columns: ["角色", "台词", "情绪"]
+      excel_optional_columns: ["知识点", "运镜", "BGM", "时长"]
+      max_excel_rows: 50
+    
+    video_specs:
+      default_resolution: [1080, 1920]
+      horizontal_resolution: [1920, 1080]
+      fps: 30
+      codec: "libx264"
+      preset: "medium"
+      bitrate: "8000k"
+      audio_codec: "aac"
+      audio_bitrate: "192k"
+    
+    generation_limits:
+      deepseek_monthly_tokens: 5000000
+      tongyi_daily_credits: 50
+      cost_alert_threshold: 20
+      retry_attempts: 3
+      retry_backoff: [1, 2, 4, 8]
+
+  # =============================================================================
+  # 文档引用协议（已对齐通用规范 - 7级目录结构）
+  # =============================================================================
+  # 规范路径格式：
+  # docs/01-convergence/, docs/01-requirements/, docs/02-architecture/
+  # docs/03-design/, docs/05-coding/, docs/06-validation/, docs/07-deployment/
+  # prompts/templates/ (原 prompts/stages/ 已修正)
+  # =============================================================================
+  document_protocols:
+    # Step 1 产出：需求收敛
+    feasibility_report:
+      path: "@docs/01-convergence/feasibility-report.md"
+      status: "SKIPPED"              # 已跳过：直接基于现有PRD开发
+      required: false
+    
+    prd:
+      path: "@docs/01-requirements/PRD-v2.0.md"
+      status: "EXISTS"               # ✅ 已存在：用户上传的V2.0版本
+      required: true
+    
+    # Step 2 产出：架构决策
+    tech_stack_decision:
+      path: "@docs/02-architecture/tech-stack-decision.md"
+      status: "EXISTS"               # ✅ 已存在：技术架构文档已上传
+      required: true
+    
+    # Step 3 产出：详细设计
+    module_design:
+      path: "@docs/02-architecture/module-design.md"
+      status: "EXISTS"               # ✅ 已存在：6+1模块划分已确定
+      required: true
+    
+    ui_spec:
+      path: "@docs/03-design/ui-spec.md"
+      status: "EXISTS"               # ✅ 已存在：UI设计规范已上传
+      required: true
+    
+    # Step 4 产出：数据建模
+    database_schema:
+      path: "@docs/02-architecture/database-schema.sql"
+      status: "MISSING"              # ⏳ 待生成：Phase 3.2 任务
+      required: true
+    
+    api_contract:
+      path: "@docs/02-architecture/api-contract.yaml"
+      status: "MISSING"              # ⏳ 待生成：Phase 3.3 任务（可选）
+      required: false
+    
+    # Step 5.1 产出：接口定义
+    # 修正：使用 {module} 占位符，支持多模块（database/script/character等）
+    interface_definitions:
+      base_path: "@docs/05-coding/interface-definitions/"
+      # 当前已完成试点模块
+      database_interface:
+        path: "@docs/05-coding/interface-definitions/database-interface.py"
+        status: "LOCKED"             # 🔒 已冻结：P4.5 通过mypy检查
+        version: "v1.0"
+        required: true
+      # 待生成模块
+      script_interface:
+        path: "@docs/05-coding/interface-definitions/script-interface.py"
+        status: "MISSING"
+        required: false
+      character_interface:
+        path: "@docs/05-coding/interface-definitions/character-interface.py"
+        status: "MISSING"
+        required: false
+    
+    # Step 6 产出：质量验证
+    test_report:
+      path: "@docs/06-validation/test-report.md"
+      status: "MISSING"              # ⏳ 待生成：Phase 6 执行后产出
+      required: false                # 运行时生成
+    
+    # Step 7 产出：部署交付
+    deployment_guide:
+      path: "@docs/07-deployment/deployment-guide.md"
+      status: "MISSING"              # ⏳ 待生成：Phase 7 产出
+      required: false
+    
+    # 支撑文档（Phase 0 产出）
+    coding_standards:
+      path: "@prompts/coding-standards.md"
+      status: "MISSING"              # ⏳ 待创建：P0.2 任务
+      required: true
+    
+    tech_spec_template:
+      path: "@prompts/templates/tech-spec-template.md"
+      status: "EXISTS"               # ✅ 已存在：用于生成接口定义
+      required: true
+    
+    # 运行时文档（自动维护）
+    decisions_log:
+      path: "@docs/decisions.md"
+      status: "MISSING"
+      required: false
+    
+    progress_board:
+      path: "@docs/progress.md"
+      status: "MISSING"
+      required: false
+
+  # =============================================================================
+  # 阶段模板路径（已修正：stages/ → templates/）
+  # =============================================================================
+  stage_templates:
+    # 修正：原 prompts/stages/ 改为 prompts/templates/ 对齐通用规范
+    stage1_brainstorm: "@prompts/templates/STEP1-brainstorm.md"
+    stage2_architecture: "@prompts/templates/STEP2-architecture.md"
+    stage3_design: "@prompts/templates/STEP3-design.md"
+    stage4_schema: "@prompts/templates/STEP4-schema.md"
+    stage5_interface: "@prompts/templates/STEP5.1-interface.md"      # 新增：接口定义专用
+    stage5_coding: "@prompts/templates/STEP5.2-coding.md"            # 原STEP5拆分
+    stage6_validation: "@prompts/templates/STEP6-validation.md"
+    stage7_deployment: "@prompts/templates/STEP7-deployment.md"
+
+  # =============================================================================
+  # 人机会合点（不变）
+  # =============================================================================
+  human_gateways:
+    must_confirm:
+      - "技术栈冻结（确认使用SQLite+Streamlit，不引入React/PostgreSQL）"
+      - "P0功能范围冻结（首帧锁定/Excel批量/本地渲染/语音合成）"
+      - "Database接口冻结（P4.5已完成，当前状态：LOCKED）"
+      - "新模块接口定义冻结（每个模块的P4.4完成后）"
+    
+    checkpoints:
+      - "函数长度>50行时建议重构"
+      - "新增外部依赖时需论证必要性"
+      - "发现技术债务时记录到decisions.md"
+
+  # =============================================================================
+  # 验证钩子（不变）
+  # =============================================================================
+  validation_hooks:
+    syntax_check: "python -m py_compile {{file}}"
+    type_check: "mypy {{file}} --ignore-missing-imports"
+    style_check: "ruff check {{file}} --select=E,W,F,I"
+    test: "pytest {{module}}/tests -v --tb=short"
+    import_test: "python -c \"from {{module}} import {{class}}; print('OK')\""
+
+# =============================================================================
+# 依赖文件清单（ReelForge当前实际状态 - 2026-03-20）
+# =============================================================================
+# 
+# 【Step 1 - 需求收敛】✅ 已完成
+# 1. @docs/01-requirements/PRD-v2.0.md              EXISTS（已上传）
+# 
+# 【Step 2 - 架构决策】✅ 已完成  
+# 2. @docs/02-architecture/tech-stack-decision.md   EXISTS（已上传）
+#
+# 【Step 3 - 详细设计】✅ 已完成
+# 3. @docs/02-architecture/module-design.md        EXISTS（6+1模块划分确定）
+# 4. @docs/03-design/ui-spec.md                    EXISTS（UI设计规范已上传）
+#
+# 【Step 4 - 数据建模】⏳ 待执行
+# 5. @docs/02-architecture/database-schema.sql     MISSING（Phase 3.2生成）
+# 6. @docs/02-architecture/api-contract.yaml        MISSING（可选）
+#
+# 【Step 5.1 - 接口定义】🔒 已冻结（试点模块）
+# 7. @docs/05-coding/interface-definitions/database-interface.py  LOCKED（P4.5完成）
+# 8. @docs/05-coding/interface-definitions/script-interface.py   MISSING（待生成）
+# 9. @docs/05-coding/interface-definitions/character-interface.py MISSING（待生成）
+#
+# 【Step 5.2 - 代码实现】⏳ 待执行（Phase 5）
+# 10. src/reelforge/modules/database/*.py          MISSING（P5.2-P5.5生成）
+#
+# 【Phase 0 - 支撑文档】⏳ 待补充
+# 11. @prompts/coding-standards.md                 MISSING（P0.2任务）
+# 12. @prompts/document-protocol.md               MISSING（P0.3任务）
+#
+# 【运行时生成 - 无需准备】
+# 13. @docs/decisions.md                           MISSING（自动维护）
+# 14. @docs/progress.md                            MISSING（自动维护）
+# 15. @docs/06-validation/test-report.md           MISSING（Phase 6生成）
+# 16. @docs/07-deployment/deployment-guide.md     MISSING（Phase 7生成）
+#
+# =============================================================================
+# 下一步行动建议：
+# 1. 立即创建 @prompts/coding-standards.md（P0.2）
+# 2. 进入 Phase 5：在 Kimi Code 中生成 database 模块代码（P5.2-P5.5）
+#    输入：@docs/05-coding/interface-definitions/database-interface.py
+# 3. 并行准备其他模块的 Step 4（Schema）和 Step 5.1（Interface）

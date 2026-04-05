@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<title>渲染中心 - 织影 ShadowWeave</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+<style>
+        body { background-color: #0a0a0f; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(26, 26, 35, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .sidebar-item.active { background: rgba(0, 212, 255, 0.1); border-left: 4px solid #00d4ff; color: #00d4ff; }
+        .kanban-col { background: rgba(255, 255, 255, 0.02); min-height: 600px; }
+        .console { font-family: 'JetBrains Mono', 'Fira Code', monospace; background: #000; }
+        .text-gradient { background: linear-gradient(90deg, #00d4ff, #b829dd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<aside class="w-64 glass border-r border-white/5 flex flex-col fixed h-full z-50">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 bg-gradient-to-br from-[#00d4ff] to-[#b829dd] rounded-lg flex items-center justify-center font-bold">织</div>
+<h1 class="text-xl font-bold tracking-wider text-gradient">织影 Weave</h1>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-2">
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-slate-400" href="index.html"><span class="iconify" data-icon="solar:widget-5-bold-duotone"></span> 核心控制台</a>
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-slate-400" href="scripts.html"><span class="iconify" data-icon="solar:document-text-bold-duotone"></span> 剧本工坊</a>
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-slate-400" href="characters.html"><span class="iconify" data-icon="solar:users-group-rounded-bold"></span> 角色工厂</a>
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-slate-400" href="editor.html"><span class="iconify" data-icon="solar:clapperboard-edit-bold"></span> 分镜工作室</a>
+<a class="sidebar-item active flex items-center gap-3 px-4 py-3 rounded-xl" href="render.html"><span class="iconify" data-icon="solar:cloud-upload-bold"></span> 渲染中心</a>
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-slate-400" href="library.html"><span class="iconify" data-icon="solar:gallery-wide-bold"></span> 成片库</a>
+</nav>
+</aside>
+<main class="flex-1 ml-64 p-8 flex flex-col gap-8">
+<div>
+<h2 class="text-3xl font-bold mb-2">渲染调度管理</h2>
+<p class="text-slate-400">实时 CPU/GPU 渲染集群监控</p>
+</div>
+<!-- 看板 -->
+<div class="grid grid-cols-3 gap-8 flex-1">
+<!-- 等待中 -->
+<div class="kanban-col rounded-[2.5rem] p-6 text-white">
+<h4 class="flex items-center gap-2 mb-6 font-bold text-slate-500">
+<span class="w-2 h-2 rounded-full bg-slate-500"></span> 等待中 (2)
+                </h4>
+<div class="space-y-4">
+<div class="glass p-5 rounded-3xl hover:border-slate-500/40 transition-all cursor-move">
+<h5 class="font-bold mb-1">2026 科技节总结</h5>
+<p class="text-[10px] text-slate-500 mb-4">创建于 10:24 AM</p>
+<div class="flex justify-between items-center">
+<span class="text-[10px] glass px-2 py-1 rounded">H.265 / 4K</span>
+<span class="iconify text-slate-600" data-icon="solar:menu-dots-bold"></span>
+</div>
+</div>
+</div>
+</div>
+<!-- 渲染中 -->
+<div class="kanban-col rounded-[2.5rem] p-6 text-white">
+<h4 class="flex items-center gap-2 mb-6 font-bold text-orange-500">
+<span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span> 渲染中 (1)
+                </h4>
+<div class="glass p-5 rounded-3xl border-orange-500/20 bg-orange-500/5">
+<div class="flex justify-between items-start mb-4">
+<h5 class="font-bold">赛博朋克大运河.mp4</h5>
+<span class="text-xs font-bold text-orange-400">76%</span>
+</div>
+<div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden mb-4">
+<div class="bg-gradient-to-r from-orange-400 to-orange-600 h-full w-[76%]"></div>
+</div>
+<div class="flex items-center gap-2 text-[10px] text-slate-400">
+<span class="iconify" data-icon="solar:server-square-bold"></span>
+<span>Node-H100-08</span>
+<span class="ml-auto">剩 3分12秒</span>
+</div>
+</div>
+</div>
+<!-- 已完成 -->
+<div class="kanban-col rounded-[2.5rem] p-6 text-white">
+<h4 class="flex items-center gap-2 mb-6 font-bold text-green-500">
+<span class="w-2 h-2 rounded-full bg-green-500"></span> 已完成 (4)
+                </h4>
+<div class="space-y-4">
+<div class="glass p-5 rounded-3xl opacity-80 hover:opacity-100 transition-all">
+<h5 class="font-bold mb-1">深夜食堂AI重绘</h5>
+<div class="text-[10px] text-green-500 font-bold mb-4">成功导出 2.4 GB</div>
+<button class="w-full py-2 bg-green-500/10 text-green-500 rounded-xl text-xs flex items-center justify-center gap-2">
+<span class="iconify" data-icon="solar:file-download-bold"></span> 下载
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- 实时日志系统 -->
+<div class="h-64 glass rounded-[2rem] overflow-hidden flex flex-col">
+<div class="px-6 py-3 glass border-b border-white/5 flex items-center gap-3">
+<span class="iconify text-slate-500" data-icon="solar:terminal-bold"></span>
+<span class="text-xs font-mono text-slate-400">集群操作日志 (Cluster Logs) - ShadowWeave Core v4.2</span>
+</div>
+<div class="flex-1 console p-6 overflow-y-auto text-[11px] leading-relaxed text-slate-300 font-mono">
+<div class="mb-1 text-slate-500">[2026-03-01 10:45:12] SYSTEM: Initializing render pipeline...</div>
+<div class="mb-1 text-[#00d4ff]">[2026-03-01 10:45:13] WORKER-08: Received Segment-04-A1 (UUID: ef82-8812)</div>
+<div class="mb-1 text-slate-300">[2026-03-01 10:45:14] FFmpeg: frame= 4265 fps= 24 q=28.0 size= 45212kB time=00:02:45.12 bit...</div>
+<div class="mb-1 text-orange-400">[2026-03-01 10:45:15] GPU: Utilization 89%, Temp 72C, VRAM 21GB/24GB</div>
+<div class="mb-1 text-[#b829dd]">[2026-03-01 10:45:16] AI-MATCH: Consistency Check: 98.42% (Character: Rin)</div>
+<div class="mb-1 text-slate-500 animate-pulse">_</div>
+</div>
+</div>
+</main>
+</body>
+</html>

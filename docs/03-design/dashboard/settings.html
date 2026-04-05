@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<title>系统设置 - 织影 ShadowWeave</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+<style>
+        body { background-color: #0a0a0f; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(26, 26, 35, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .sidebar-item.active { background: rgba(0, 212, 255, 0.1); border-left: 4px solid #00d4ff; color: #00d4ff; }
+        .text-gradient { background: linear-gradient(90deg, #00d4ff, #b829dd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .input-glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); outline: none; }
+        .input-glass:focus { border-color: #00d4ff; box-shadow: 0 0 10px rgba(0, 212, 255, 0.2); }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<aside class="w-64 glass border-r border-white/5 flex flex-col fixed h-full z-50">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 bg-gradient-to-br from-[#00d4ff] to-[#b829dd] rounded-lg flex items-center justify-center font-bold">织</div>
+<h1 class="text-xl font-bold tracking-wider text-gradient text-white">织影 Weave</h1>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-2">
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-slate-400" href="index.html"><span class="iconify text-white" data-icon="solar:widget-5-bold-duotone"></span> 核心控制台</a>
+<a class="sidebar-item active flex items-center gap-3 px-4 py-3 rounded-xl" href="settings.html"><span class="iconify" data-icon="solar:settings-bold"></span> 系统设置</a>
+</nav>
+</aside>
+<main class="flex-1 ml-64 p-8 max-w-5xl">
+<h2 class="text-3xl font-bold mb-10">偏好设置与集成</h2>
+<div class="space-y-8">
+<!-- 密钥管理 -->
+<section class="glass p-8 rounded-[2rem] text-white">
+<div class="flex items-center gap-3 mb-6">
+<span class="iconify text-2xl text-[#b829dd]" data-icon="solar:key-square-bold-duotone"></span>
+<h3 class="text-xl font-bold">API 密钥管理</h3>
+</div>
+<div class="space-y-6">
+<div>
+<label class="text-xs text-slate-400 block mb-2">DeepSeek API Key</label>
+<div class="flex gap-4">
+<input class="flex-1 input-glass rounded-xl px-4 py-3 text-sm font-mono text-slate-300" type="password" value="sk-shad-**************"/>
+<button class="px-5 py-3 glass rounded-xl text-xs hover:bg-white/5 text-white">显示</button>
+<button class="px-5 py-3 bg-[#00d4ff]/10 text-[#00d4ff] rounded-xl text-xs font-bold border border-[#00d4ff]/20">测试连接</button>
+</div>
+</div>
+<div>
+<label class="text-xs text-slate-400 block mb-2">通义万相 API Key (V4集成)</label>
+<div class="flex gap-4">
+<input class="flex-1 input-glass rounded-xl px-4 py-3 text-sm font-mono text-slate-300" type="password" value="ali-y-**************"/>
+<button class="px-5 py-3 glass rounded-xl text-xs hover:bg-white/5 text-white">显示</button>
+<button class="px-5 py-3 glass rounded-xl text-xs text-slate-500 cursor-not-allowed">已连接</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 持久化存储 -->
+<section class="grid grid-cols-2 gap-8 text-white">
+<div class="glass p-8 rounded-[2rem]">
+<div class="flex items-center gap-3 mb-6">
+<span class="iconify text-2xl text-[#00ffab]" data-icon="solar:database-bold-duotone"></span>
+<h3 class="text-xl font-bold">存储与资产</h3>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center bg-white/5 p-4 rounded-2xl">
+<span class="text-sm">本地缓存检查</span>
+<span class="text-xs text-green-500">正常 (1.2GB)</span>
+</div>
+<div class="flex justify-between items-center bg-white/5 p-4 rounded-2xl">
+<span class="text-sm">外部存储 (AWS S3)</span>
+<span class="text-xs text-slate-400">已连接</span>
+</div>
+<button class="w-full py-4 glass border-white/10 rounded-2xl text-xs font-bold hover:bg-white/5 transition-all">一键清理无效素材</button>
+</div>
+</div>
+<div class="glass p-8 rounded-[2rem] text-white">
+<div class="flex items-center gap-3 mb-6">
+<span class="iconify text-2xl text-[#00d4ff]" data-icon="solar:palette-bold-duotone"></span>
+<h3 class="text-xl font-bold">界面偏好</h3>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-sm">渲染时发光特效</span>
+<div class="w-12 h-6 bg-[#00d4ff] rounded-full relative">
+<div class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm">智能剧本预解析</span>
+<div class="w-12 h-6 bg-[#00d4ff] rounded-full relative">
+<div class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm">性能优先模式 (关闭模糊)</span>
+<div class="w-12 h-6 bg-slate-700 rounded-full relative">
+<div class="absolute left-1 top-1 w-4 h-4 bg-slate-400 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 保存按钮 -->
+<div class="flex justify-end pt-6">
+<button class="px-10 py-4 bg-gradient-to-r from-[#00d4ff] to-[#b829dd] rounded-2xl font-bold shadow-xl shadow-blue-500/20 text-white">保存并应用所有更改</button>
+</div>
+</div>
+</main>
+</body>
+</html>

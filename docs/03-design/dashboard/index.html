@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>织影 ShadowWeave - 数字化创作控制台</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', 'PingFang SC', sans-serif;
+            background-color: #0a0a0f;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        .glass {
+            background: rgba(26, 26, 35, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .neon-border-cyan { border-bottom: 2px solid #00d4ff; box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2); }
+        .text-gradient {
+            background: linear-gradient(90deg, #00d4ff, #b829dd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff, #008fb3);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        .sidebar-item.active {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid #00d4ff;
+            color: #00d4ff;
+        }
+        .chart-container { height: 260px; width: 100%; }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- 侧边导航 -->
+<aside class="w-64 glass border-r border-white/5 flex flex-col fixed h-full z-50">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 bg-gradient-to-br from-[#00d4ff] to-[#b829dd] rounded-lg flex items-center justify-center">
+<span class="iconify text-2xl" data-icon="solar:magic-stick-3-bold-duotone"></span>
+</div>
+<h1 class="text-xl font-bold tracking-wider text-gradient">织影 Weave</h1>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-2">
+<a class="sidebar-item active flex items-center gap-3 px-4 py-3 rounded-xl transition-all" href="index.html">
+<span class="iconify text-xl" data-icon="solar:widget-5-bold-duotone"></span>
+<span>核心控制台</span>
+</a>
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-slate-400" href="scripts.html">
+<span class="iconify text-xl" data-icon="solar:document-text-bold-duotone"></span>
+<span>剧本工坊</span>
+</a>
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-slate-400" href="characters.html">
+<span class="iconify text-xl" data-icon="solar:users-group-rounded-bold-duotone"></span>
+<span>角色工厂</span>
+</a>
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-slate-400" href="editor.html">
+<span class="iconify text-xl" data-icon="solar:clapperboard-edit-bold-duotone"></span>
+<span>分镜工作室</span>
+</a>
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-slate-400" href="render.html">
+<span class="iconify text-xl" data-icon="solar:cloud-upload-bold-duotone"></span>
+<span>渲染中心</span>
+</a>
+<a class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-slate-400" href="library.html">
+<span class="iconify text-xl" data-icon="solar:gallery-wide-bold-duotone"></span>
+<span>成片库</span>
+</a>
+</nav>
+<div class="p-4 mt-auto">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-slate-400 mb-2" href="settings.html">
+<span class="iconify text-xl" data-icon="solar:settings-bold-duotone"></span>
+<span>系统设置</span>
+</a>
+<div class="glass rounded-2xl p-4 border-white/10 bg-blue-500/5">
+<div class="flex justify-between items-center mb-2 text-xs">
+<span class="text-slate-400">存储空间 (2026版)</span>
+<span class="text-[#00d4ff]">85%</span>
+</div>
+<div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+<div class="bg-gradient-to-r from-[#00d4ff] to-[#b829dd] h-full w-[85%]"></div>
+</div>
+</div>
+</div>
+</aside>
+<!-- 主内容区 -->
+<main class="flex-1 ml-64 p-8">
+<!-- 顶部信息栏 -->
+<header class="flex justify-between items-center mb-8">
+<div>
+<h2 class="text-3xl font-bold mb-1">早安，首席创作者 <span class="text-[#00d4ff]">Weaver</span></h2>
+<p class="text-slate-400 text-sm">今天是 2026年3月1日，AI 已为您优化 12 个分镜建议。</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="glass px-4 py-2 rounded-full flex items-center gap-3 border-white/10">
+<span class="flex items-center gap-1 text-xs text-slate-300">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        DeepSeek V3 已连接
+                    </span>
+<div class="w-px h-4 bg-white/10"></div>
+<button class="relative">
+<span class="iconify text-xl" data-icon="solar:bell-bing-bold-duotone"></span>
+<span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-[#0a0a0f]"></span>
+</button>
+</div>
+<img alt="User Avatar" class="w-12 h-12 rounded-full border-2 border-[#00d4ff] p-0.5" src="https://modao.cc/agent-py/media/generated_images/2026-03-01/1b415814f28d4d63bcd6894e931b5157.jpg"/>
+</div>
+</header>
+<!-- 数据快报 -->
+<div class="grid grid-cols-4 gap-6 mb-8">
+<div class="glass p-6 rounded-3xl group hover:border-[#00d4ff]/30 transition-all">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-blue-500/10 rounded-2xl text-[#00d4ff]">
+<span class="iconify text-3xl" data-icon="solar:video-library-bold-duotone"></span>
+</div>
+</div>
+<h3 class="text-slate-400 text-sm mb-1">今日成片</h3>
+<div class="text-3xl font-bold">24 <span class="text-xs text-green-500 font-normal">+12%</span></div>
+</div>
+<div class="glass p-6 rounded-3xl group hover:border-[#b829dd]/30 transition-all">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-purple-500/10 rounded-2xl text-[#b829dd]">
+<span class="iconify text-3xl" data-icon="solar:clock-circle-bold-duotone"></span>
+</div>
+</div>
+<h3 class="text-slate-400 text-sm mb-1">节省创作时长</h3>
+<div class="text-3xl font-bold">156.4 <span class="text-xs text-green-500 font-normal">小时</span></div>
+</div>
+<div class="glass p-6 rounded-3xl group hover:border-[#00ffab]/30 transition-all">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-emerald-500/10 rounded-2xl text-[#00ffab]">
+<span class="iconify text-3xl" data-icon="solar:card-2-bold-duotone"></span>
+</div>
+</div>
+<h3 class="text-slate-400 text-sm mb-1">DeepSeek Tokens</h3>
+<div class="text-3xl font-bold">1.2M <span class="text-xs text-slate-400 font-normal">剩余</span></div>
+</div>
+<div class="glass p-6 rounded-3xl group hover:border-orange-500/30 transition-all">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-orange-500/10 rounded-2xl text-orange-500">
+<span class="iconify text-3xl" data-icon="solar:fire-bold-duotone"></span>
+</div>
+</div>
+<h3 class="text-slate-400 text-sm mb-1">GPU 算力利用率</h3>
+<div class="text-3xl font-bold">92% <span class="text-xs text-orange-500 font-normal">峰值</span></div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-8">
+<!-- 渲染监控图表 -->
+<div class="col-span-2 glass p-8 rounded-[2rem]">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-xl font-bold">API 消耗与渲染趋势</h3>
+<div class="flex gap-2">
+<button class="text-xs px-3 py-1 glass rounded-lg border-white/10">近7天</button>
+<button class="text-xs px-3 py-1 bg-white/5 rounded-lg border border-white/5 text-slate-500">近30天</button>
+</div>
+</div>
+<div class="chart-container text-white" id="trendChart"></div>
+</div>
+<!-- 最近项目快速访问 -->
+<div class="glass p-8 rounded-[2rem]">
+<h3 class="text-xl font-bold mb-6">正在进行的项目</h3>
+<div class="space-y-6">
+<div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 cursor-pointer border border-transparent hover:border-white/10 transition-all">
+<img alt="P001" class="w-20 h-12 object-cover rounded-lg" src="https://modao.cc/agent-py/media/generated_images/2026-03-01/4695dd5122a74b91af708bf789a8a5e9.jpg"/>
+<div class="flex-1 min-w-0">
+<h4 class="font-semibold text-sm truncate">赛博朋克大运河</h4>
+<p class="text-xs text-slate-500">渲染中 · 85%</p>
+</div>
+<span class="iconify text-[#00d4ff]" data-icon="solar:play-circle-bold-duotone"></span>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 cursor-pointer border border-transparent hover:border-white/10 transition-all">
+<img alt="P002" class="w-20 h-12 object-cover rounded-lg" src="https://modao.cc/agent-py/media/generated_images/2026-03-01/7a44276ef21942b1ac13f56e4ff26f98.jpg"/>
+<div class="flex-1 min-w-0">
+<h4 class="font-semibold text-sm truncate">2026科技展Vlog</h4>
+<p class="text-xs text-slate-500">剧本编制中</p>
+</div>
+<span class="iconify text-slate-600" data-icon="solar:pause-circle-bold-duotone"></span>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 cursor-pointer border border-transparent hover:border-white/10 transition-all">
+<img alt="P003" class="w-20 h-12 object-cover rounded-lg text-white" src="https://modao.cc/agent-py/media/generated_images/2026-03-01/f746c19a3b104c7d9b96e08d9abc3147.jpg"/>
+<div class="flex-1 min-w-0">
+<h4 class="font-semibold text-sm truncate">深夜食堂AI重绘</h4>
+<p class="text-xs text-slate-500">已导出</p>
+</div>
+<span class="iconify text-green-500" data-icon="solar:check-read-bold-duotone"></span>
+</div>
+</div>
+<button class="w-full mt-10 py-4 btn-primary rounded-2xl text-white font-bold flex items-center justify-center gap-2">
+<span class="iconify text-xl" data-icon="solar:add-circle-bold-duotone"></span>
+                    新建创作项目
+                </button>
+</div>
+</div>
+</main>
+<script>
+        // 初始化 ECharts
+        const chart = echarts.init(document.getElementById('trendChart'), 'dark');
+        const option = {
+            backgroundColor: 'transparent',
+            tooltip: { trigger: 'axis' },
+            legend: { data: ['DeepSeek Token', '渲染任务'], bottom: 0, textStyle: { color: '#94a3b8' } },
+            grid: { top: 20, left: '3%', right: '4%', bottom: '15%', containLabel: true },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['02-23', '02-24', '02-25', '02-26', '02-27', '02-28', '03-01'],
+                axisLine: { lineStyle: { color: 'rgba(255,255,255,0.1)' } }
+            },
+            yAxis: {
+                type: 'value',
+                splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } }
+            },
+            series: [
+                {
+                    name: 'DeepSeek Token',
+                    type: 'line',
+                    smooth: true,
+                    data: [120, 132, 101, 134, 90, 230, 210],
+                    itemStyle: { color: '#00d4ff' },
+                    areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{offset: 0, color: 'rgba(0, 212, 255, 0.3)'}, {offset: 1, color: 'transparent'}]) }
+                },
+                {
+                    name: '渲染任务',
+                    type: 'line',
+                    smooth: true,
+                    data: [45, 182, 191, 234, 290, 330, 310],
+                    itemStyle: { color: '#b829dd' }
+                }
+            ]
+        };
+        chart.setOption(option);
+        window.addEventListener('resize', () => chart.resize());
+    </script>
+</body>
+</html>
